@@ -1,0 +1,783 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package aplikasibelajarpbo.member;
+
+import aplikasibelajarpbo.Main;
+import aplikasibelajarpbo.database.DatabaseImpl;
+import aplikasibelajarpbo.model.Materi;
+import aplikasibelajarpbo.model.Member;
+import aplikasibelajarpbo.model.Ujian;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Image;
+import java.util.ArrayList;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import org.icepdf.ri.common.ComponentKeyBinding;
+import org.icepdf.ri.common.SwingController;
+import org.icepdf.ri.common.SwingViewBuilder;
+
+/**
+ *
+ * @author SWIFT 3
+ */
+public class MenuMember extends javax.swing.JFrame {
+
+    /**
+     * Creates new form MenuMember
+     */
+    CardLayout cardLayout;
+    public static Member mem;
+    DatabaseImpl database = new DatabaseImpl();
+    private ArrayList<Materi> listMateri;
+    private ArrayList<Ujian> listUjian;
+    
+    private int nilai;
+    
+    public MenuMember() {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        jPanel4.setVisible(false);
+        jPanel5.setVisible(false);
+        jPanel6.setVisible(false);
+        cardLayout = (CardLayout) jPanel3.getLayout();
+        tampilMateri();
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(jRadioButton1);
+        bg.add(jRadioButton2);
+        bg.add(jRadioButton3);
+        bg.add(jRadioButton4);
+        jPanel7.setVisible(false);
+        
+            
+    }
+    
+    public void setUjian(){
+        jLabel_judul.setText(listUjian.get(u).getJudul());
+        jLabel_soal.setText(listUjian.get(u).getSoal());
+        jRadioButton1.setText(listUjian.get(u).getJ1());
+        jRadioButton2.setText(listUjian.get(u).getJ2());
+        jRadioButton3.setText(listUjian.get(u).getJ3());
+        jRadioButton4.setText(listUjian.get(u).getJ4());
+        System.out.println(listUjian.get(u).getSoal());
+        
+        
+    }
+   public void showModul(int i){
+       System.out.println("id row "+i);
+       
+       String path = listMateri.get(i).getPath();
+       
+       openpdf(path);
+       
+   }
+   public void tampilMateri(){
+       
+       listMateri  = database.select(); 
+       System.out.println(listMateri.get(1).getId());
+       DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+       
+       Object[] row = new Object[1];
+       
+       for(Materi materi : listMateri){
+           row[0] = materi.getJudul();
+           model.addRow(row);
+       }
+   }
+   
+    void openpdf(String file){
+        
+        try {
+            SwingController control=new SwingController();
+            SwingViewBuilder factry=new SwingViewBuilder(control);
+            JPanel veiwerCompntpnl=factry.buildViewerPanel();
+            ComponentKeyBinding.install(control, veiwerCompntpnl);
+            control.getDocumentViewController().setAnnotationCallback(
+                    new org.icepdf.ri.common.MyAnnotationCallback(
+                    control.getDocumentViewController()));
+                   control.openDocument(file);
+            jScrollPane2.setViewportView(veiwerCompntpnl); 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this,"Cannot Load Pdf");
+        }
+}
+
+    public  void setLabel(Member member){
+        this.mem = member;
+        jLabel_nama.setText(member.getUsername());
+        jLabel_kota.setText(member.getKota());
+        jLabel_email.setText(member.getEmail());
+        jLabel_ttl.setText(member.getTtl());
+        jLabel_noHp.setText(member.getNoTelp());
+        jLabel_gender.setText(member.getGender());
+
+        if(member.getPhoto()!= null){
+            jLabel_photo.setIcon(resizeImage(member.getPhoto()));
+        }else{
+            jLabel_photo.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/nopoto.jpg")).getImage().getScaledInstance(jLabel_photo.getWidth(),jLabel_photo.getHeight(), Image.SCALE_SMOOTH)));
+        }
+        jLabel12.setIcon(new ImageIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/bg_3.jpg")).getImage().getScaledInstance(jLabel12.getWidth(),800, Image.SCALE_SMOOTH)));
+        
+    }
+    private ImageIcon resizeImage(byte[] photo){
+        ImageIcon imageIcon = new ImageIcon(photo);
+        Image img = imageIcon.getImage().getScaledInstance(jLabel_photo.getWidth(),jLabel_photo.getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon icon = new ImageIcon(img); 
+        return icon;
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel_kelas = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel_profil = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel7 = new javax.swing.JPanel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jLabel_judul = new javax.swing.JLabel();
+        jLabel_soal = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jButton5 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel_photo = new javax.swing.JLabel();
+        jLabel_nama = new javax.swing.JLabel();
+        jLabel_kota = new javax.swing.JLabel();
+        jLabel_gender = new javax.swing.JLabel();
+        jLabel_email = new javax.swing.JLabel();
+        jLabel_ttl = new javax.swing.JLabel();
+        jLabel_noHp = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        jButton6 = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setPreferredSize(new java.awt.Dimension(2000, 1125));
+
+        jPanel2.setBackground(new java.awt.Color(102, 102, 102));
+
+        jLabel_kelas.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel_kelas.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel_kelas.setText("Kelas");
+        jLabel_kelas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_kelas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_kelasMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_kelasMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_kelasMouseExited(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel1.setText("Beranda");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel1MouseExited(evt);
+            }
+        });
+
+        jLabel_profil.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel_profil.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel_profil.setText("Profil");
+        jLabel_profil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel_profil.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel_profilMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel_profilMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel_profilMouseExited(evt);
+            }
+        });
+
+        jButton2.setBackground(new java.awt.Color(102, 102, 102));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Log Out");
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addComponent(jLabel1)
+                .addGap(75, 75, 75)
+                .addComponent(jLabel_kelas)
+                .addGap(75, 75, 75)
+                .addComponent(jLabel_profil)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(112, 112, 112))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_kelas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_profil, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+
+        jPanel3.setLayout(new java.awt.CardLayout());
+
+        jPanel4.setBackground(new java.awt.Color(255, 102, 102));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 2000, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1024, Short.MAX_VALUE)
+        );
+
+        jPanel3.add(jPanel4, "card2");
+
+        jPanel5.setBackground(new java.awt.Color(51, 255, 51));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 51));
+
+        jRadioButton1.setText("jRadioButton1");
+
+        jRadioButton2.setText("jRadioButton1");
+
+        jRadioButton3.setText("jRadioButton1");
+
+        jRadioButton4.setText("jRadioButton1");
+
+        jLabel_judul.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel_judul.setText("Soal 1");
+
+        jLabel_soal.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        jLabel_soal.setText("jLabel2");
+
+        jButton3.setText("Next");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 51));
+        jLabel4.setText("Kalau sudah mengklik next jawaban otomatis tersimpan");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(73, 73, 73)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton1)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jRadioButton3)
+                            .addComponent(jRadioButton4)
+                            .addComponent(jLabel_soal, javax.swing.GroupLayout.PREFERRED_SIZE, 1181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel_judul)))
+                .addContainerGap(126, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(53, 53, 53))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(45, 45, 45)
+                .addComponent(jLabel_judul)
+                .addGap(33, 33, 33)
+                .addComponent(jLabel_soal)
+                .addGap(49, 49, 49)
+                .addComponent(jRadioButton1)
+                .addGap(39, 39, 39)
+                .addComponent(jRadioButton2)
+                .addGap(39, 39, 39)
+                .addComponent(jRadioButton3)
+                .addGap(39, 39, 39)
+                .addComponent(jRadioButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(73, 73, 73))
+        );
+
+        jScrollPane2.setViewportView(jPanel7);
+
+        jTable1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "PBO "
+            }
+        ));
+        jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jTable1.setRowHeight(50);
+        jTable1.setRowMargin(8);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
+
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(51, 0, 51));
+        jButton5.setText("Ujian");
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 930, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(78, Short.MAX_VALUE))
+        );
+
+        jPanel3.add(jPanel5, "card3");
+
+        jPanel6.setPreferredSize(new java.awt.Dimension(2000, 1024));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel_photo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(102, 102, 102), 3));
+        jPanel6.add(jLabel_photo, new org.netbeans.lib.awtextra.AbsoluteConstraints(124, 312, 264, 370));
+
+        jLabel_nama.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel_nama.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/nama.png"))); // NOI18N
+        jLabel_nama.setText("Erik Contena");
+        jLabel_nama.setIconTextGap(30);
+        jPanel6.add(jLabel_nama, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 500, 337, -1));
+
+        jLabel_kota.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel_kota.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/lokasi.png"))); // NOI18N
+        jLabel_kota.setText("Erik Contena");
+        jLabel_kota.setIconTextGap(30);
+        jPanel6.add(jLabel_kota, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 614, 337, -1));
+
+        jLabel_gender.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel_gender.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/icons8-gender-64.png"))); // NOI18N
+        jLabel_gender.setText("Erik Contena");
+        jLabel_gender.setIconTextGap(30);
+        jPanel6.add(jLabel_gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(475, 728, 337, -1));
+
+        jLabel_email.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel_email.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/black-back-closed-envelope-shape.png"))); // NOI18N
+        jLabel_email.setText("Erik Contena");
+        jLabel_email.setIconTextGap(30);
+        jPanel6.add(jLabel_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(1047, 500, 337, -1));
+
+        jLabel_ttl.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel_ttl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/kalender.png"))); // NOI18N
+        jLabel_ttl.setText("Erik Contena");
+        jLabel_ttl.setIconTextGap(30);
+        jPanel6.add(jLabel_ttl, new org.netbeans.lib.awtextra.AbsoluteConstraints(1047, 614, 337, -1));
+
+        jLabel_noHp.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel_noHp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/phone.png"))); // NOI18N
+        jLabel_noHp.setText("Erik Contena");
+        jLabel_noHp.setIconTextGap(30);
+        jPanel6.add(jLabel_noHp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1047, 728, 337, -1));
+
+        jButton1.setBackground(new java.awt.Color(102, 102, 102));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Edit");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1656, 733, 160, 56));
+
+        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        jLabel12.setPreferredSize(new java.awt.Dimension(2000, 450));
+        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 2000, 440));
+
+        jButton6.setBackground(new java.awt.Color(102, 102, 102));
+        jButton6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
+        jButton6.setText("Refres");
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+        jPanel6.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1660, 640, 150, 60));
+
+        jPanel3.add(jPanel6, "card4");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        jPanel4.setVisible(true);
+        jPanel5.setVisible(false);
+        jPanel6.setVisible(false);
+        cardLayout.show(jPanel3, "card2");
+
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel_kelasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_kelasMouseClicked
+        jPanel4.setVisible(false);
+        jPanel5.setVisible(true);
+        jPanel6.setVisible(false);
+        cardLayout.show(jPanel3, "card3");
+        jLabel_kelas.setForeground(Color.white);
+
+       
+        
+    }//GEN-LAST:event_jLabel_kelasMouseClicked
+
+    private void jLabel_profilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_profilMouseClicked
+        jPanel4.setVisible(false);
+        jPanel5.setVisible(false);
+        jPanel6.setVisible(true);
+        cardLayout.show(jPanel3, "card4");
+        
+    }//GEN-LAST:event_jLabel_profilMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        UpdateUser update = new UpdateUser();
+        update.setVisible(true);
+        update.pack();
+        update.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        update.setLabel(mem);
+        
+        System.out.println(mem.getEmail());
+        
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
+        jLabel1.setForeground(Color.white);
+    }//GEN-LAST:event_jLabel1MouseEntered
+
+    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
+        jLabel1.setForeground(new Color(255,102,0));
+    }//GEN-LAST:event_jLabel1MouseExited
+
+    private void jLabel_kelasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_kelasMouseEntered
+        jLabel_kelas.setForeground(Color.white);
+    }//GEN-LAST:event_jLabel_kelasMouseEntered
+
+    private void jLabel_profilMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_profilMouseEntered
+        jLabel_profil.setForeground(Color.white);
+    }//GEN-LAST:event_jLabel_profilMouseEntered
+
+    private void jLabel_kelasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_kelasMouseExited
+        jLabel_kelas.setForeground(new Color(255,102,0));
+    }//GEN-LAST:event_jLabel_kelasMouseExited
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Main main = new Main();
+        this.dispose();
+        main.setVisible(true);
+        main.pack();
+        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jLabel_profilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_profilMouseExited
+        jLabel_profil.setForeground(new Color(255,102,0));
+    }//GEN-LAST:event_jLabel_profilMouseExited
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        
+        int i = jTable1.getSelectedRow();
+        
+        showModul(i);
+    }//GEN-LAST:event_jTable1MouseClicked
+    private int u = 0;
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        jPanel7.setVisible(true);
+        jScrollPane2.setViewportView(jPanel7);
+        listUjian = database.selectUjian();
+       
+            if (mem.getNilai()>=8){
+                jRadioButton1.setVisible(false);
+                jRadioButton2.setVisible(false);
+                jRadioButton3.setVisible(false);
+                jRadioButton4.setVisible(false);
+                nilai = mem.getNilai();
+                jLabel_judul.setText("Nilai  : " +nilai);
+                jLabel_soal.setText("Selamat Anda Lulus !!");
+                jButton3.setVisible(false);
+                System.out.println(nilai);
+            }else{
+                nilai = 0; 
+                setUjian();
+                 
+            }
+       
+        
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        setLabel(mem);
+        System.out.println(mem.getKota());
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (jButton3.getText().equals("Next") || jButton3.getText().equals("Selesai")){
+            if(jRadioButton1.isSelected()){
+                if(jRadioButton1.getText().equals(listUjian.get(u).getBenar())){
+                    nilai++;
+
+                }
+            }
+            else if(jRadioButton2.isSelected()){
+                if(jRadioButton2.getText().equals(listUjian.get(u).getBenar())){
+                    nilai++;
+                }
+            }
+            else if(jRadioButton3.isSelected()){
+                if(jRadioButton3.getText().equals(listUjian.get(u).getBenar())){
+                    nilai++;
+
+                }
+            }
+            else if(jRadioButton4.isSelected()){
+                if(jRadioButton4.getText().equals(listUjian.get(u).getBenar())){
+                    nilai++;
+
+                }
+            }
+        }
+        u++;
+        if(u < listUjian.size() && !jButton3.getText().equals("Selesai")) {
+            setUjian();
+        }
+        if (jButton3.getText().equals("Selesai")){
+            jLabel_judul.setText("Nilai  : " +nilai);
+            jRadioButton1.setVisible(false);
+                jRadioButton2.setVisible(false);
+                jRadioButton3.setVisible(false);
+                jRadioButton4.setVisible(false);
+            if (nilai>=8){
+                jLabel_soal.setText("Selamat Anda Lulus !!");
+                mem = database.update(mem.getId(), nilai);
+                jButton3.setVisible(false);
+            }else{
+                jLabel_soal.setText("Maaf Anda Belum Lulus !!");
+                jButton3.setText("Ulangi");
+                
+                
+                return;
+            }
+            
+           
+  
+        }
+        if(jButton3.getText().equals("Ulangi")){
+            u=0;
+            nilai = 0;
+            setUjian();
+            jButton3.setText("Next");
+              jRadioButton1.setVisible(true);
+                jRadioButton2.setVisible(true);
+                jRadioButton3.setVisible(true);
+                jRadioButton4.setVisible(true);
+        }
+        
+        if(u >= listUjian.size()-1){
+            u = listUjian.size()-1;
+            jButton3.setText("Selesai");
+        }
+        
+        
+        System.out.println(u);
+        
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MenuMember.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MenuMember.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MenuMember.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MenuMember.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MenuMember().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel_email;
+    private javax.swing.JLabel jLabel_gender;
+    private javax.swing.JLabel jLabel_judul;
+    private javax.swing.JLabel jLabel_kelas;
+    private javax.swing.JLabel jLabel_kota;
+    private javax.swing.JLabel jLabel_nama;
+    private javax.swing.JLabel jLabel_noHp;
+    private javax.swing.JLabel jLabel_photo;
+    private javax.swing.JLabel jLabel_profil;
+    private javax.swing.JLabel jLabel_soal;
+    private javax.swing.JLabel jLabel_ttl;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton jRadioButton4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    // End of variables declaration//GEN-END:variables
+}
