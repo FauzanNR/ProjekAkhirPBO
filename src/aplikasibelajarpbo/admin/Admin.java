@@ -55,7 +55,7 @@ public class Admin extends javax.swing.JFrame {
         initComponents();
         card = (CardLayout)(PanelCard.getLayout());
         showDataUser();
-        showDataMOdul();
+        showDataMOdul(1, null);
         ClickPopUpMenu(this);
         CencelBtn.setVisible(false);
 
@@ -64,10 +64,8 @@ public ArrayList<Member> accountUser(){
         ArrayList<Member> account = new ArrayList<>();
         
         try{
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/belajar_db", "root","");
-            ps = (PreparedStatement) connection.prepareStatement("SELECT * FROM `user` ORDER BY `user`.`id` ASC");
-            set = ps.executeQuery();
+            st = MyConnection.getConnection().createStatement();
+            set = st.executeQuery("SELECT * FROM `user` ORDER BY `user`.`id` ASC");
             
             Member mem ;            
             while(set.next()){
@@ -95,7 +93,7 @@ public ArrayList<Member> accountUser(){
     
     private void showDataUser(){
         ArrayList<Member> listData = accountUser();
-        System.out.println("lisdata "+listData.size());
+        
         DefaultTableModel tableModel = (DefaultTableModel) TabelUser.getModel();
         Object[] rowObjects  = new Object[10];
         
@@ -117,14 +115,13 @@ public ArrayList<Member> accountUser(){
         }
     }
     
-    public ArrayList<ModulClass> SelectmodulClass(){
+    public ArrayList<ModulClass> SelectmodulClass(String query){
         ArrayList<ModulClass> modul = new ArrayList<>();
              
         try{
             Class.forName("com.mysql.jdbc.Driver");
-            connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/belajar_db", "root","");
-            ps = (PreparedStatement) connection.prepareStatement("SELECT * FROM `materi` ORDER BY `materi`.`id` ASC");
-            set = ps.executeQuery();
+            st = MyConnection.getConnection().createStatement();
+            set = st.executeQuery(query);
             
             ModulClass iniModul;
             while(set.next()){
@@ -139,9 +136,14 @@ public ArrayList<Member> accountUser(){
         return modul;
     }
     
-    private void showDataMOdul(){
-        ArrayList<ModulClass> listModul = SelectmodulClass();
+    private void showDataMOdul(int j, String cari){
+        ArrayList<ModulClass> listModul = null;
         
+        if (j == 1) {
+            listModul = SelectmodulClass("SELECT * FROM `materi` ORDER BY `materi`.`id` ASC");
+        }else if (j == 2) {
+            listModul = SelectmodulClass("SELECT *FROM materi WHERE(Judul LIKE '%"+ cari + "%')");
+        }
         tableModel = (DefaultTableModel) ModulTable.getModel();
         if (listModul.size() == 0) {
             Object[] rowObjects  = new Object[4];
@@ -208,7 +210,7 @@ public ArrayList<Member> accountUser(){
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showDataMOdul();
+                showDataMOdul(1, null);
             }
         });
         popupMenu.add(menuItem);
@@ -247,7 +249,7 @@ public ArrayList<Member> accountUser(){
                  JOptionPane.showMessageDialog(null, e);
              }    
         }
-        showDataMOdul();
+        showDataMOdul(1, null);
         InsertNamaModul.setText("");
         InsertFile.setText("");
         IdTxt.setText("");
@@ -272,7 +274,7 @@ public ArrayList<Member> accountUser(){
                 JOptionPane.showMessageDialog(rootPane, "Delete failed !!!");
              }    
         }
-         showDataMOdul();
+         showDataMOdul(1, null);
     }
     
     
@@ -305,6 +307,9 @@ public ArrayList<Member> accountUser(){
         IdTxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         CencelBtn = new javax.swing.JButton();
+        searchTxtf = new javax.swing.JTextField();
+        BtnCari = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
         card2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelUser = new javax.swing.JTable();
@@ -488,6 +493,22 @@ public ArrayList<Member> accountUser(){
             }
         });
 
+        searchTxtf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTxtfActionPerformed(evt);
+            }
+        });
+
+        BtnCari.setText("cari");
+        BtnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCariActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Cari nama modul");
+
         javax.swing.GroupLayout card1Layout = new javax.swing.GroupLayout(card1);
         card1.setLayout(card1Layout);
         card1Layout.setHorizontalGroup(
@@ -511,7 +532,10 @@ public ArrayList<Member> accountUser(){
                     .addGroup(card1Layout.createSequentialGroup()
                         .addComponent(IdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)))
+                        .addComponent(jLabel4))
+                    .addComponent(searchTxtf, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnCari)
+                    .addComponent(jLabel5))
                 .addContainerGap(626, Short.MAX_VALUE))
         );
         card1Layout.setVerticalGroup(
@@ -535,6 +559,12 @@ public ArrayList<Member> accountUser(){
                 .addGroup(card1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ButtonSave)
                     .addComponent(CencelBtn))
+                .addGap(66, 66, 66)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(searchTxtf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(BtnCari)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1125, Short.MAX_VALUE)
         );
@@ -690,6 +720,15 @@ FileNameExtensionFilter extension = new FileNameExtensionFilter("PDF", "pdf");
         edit = false;
     }//GEN-LAST:event_CencelBtnActionPerformed
 
+    private void searchTxtfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTxtfActionPerformed
+        
+    }//GEN-LAST:event_searchTxtfActionPerformed
+
+    private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
+        System.out.println("ini btn"+searchTxtf.getText());
+        showDataMOdul(2, searchTxtf.getText());
+    }//GEN-LAST:event_BtnCariActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -726,6 +765,7 @@ FileNameExtensionFilter extension = new FileNameExtensionFilter("PDF", "pdf");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCari;
     private javax.swing.JButton ButtonOpen;
     private javax.swing.JButton ButtonSave;
     private javax.swing.JButton CencelBtn;
@@ -745,9 +785,11 @@ FileNameExtensionFilter extension = new FileNameExtensionFilter("PDF", "pdf");
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField searchTxtf;
     // End of variables declaration//GEN-END:variables
 }
