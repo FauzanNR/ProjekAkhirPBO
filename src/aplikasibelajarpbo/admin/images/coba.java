@@ -22,9 +22,11 @@ public class coba {
         
         ClassLoader loader = coba.class.getClassLoader();
         System.out.println(loader.getResource("images/"));
+        
         String oo = loader.getResource("images/").getPath();
+        
         System.out.println(oo);
-        String path = "/media/unbroken/A84E423F4E420712/KULIAH/SMESTER_4/PBO/tugas/SUBMISSION1.pdf";
+        String path = "D:\\school\\semester4\\PBO\\praktikum\\Modul 1 PBO.pdf";
         Path p = Paths.get(path);
         String fileName = p.getFileName().toString();
         System.out.println(fileName);

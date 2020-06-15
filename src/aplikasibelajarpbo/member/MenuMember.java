@@ -150,6 +150,11 @@ public class MenuMember extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel7 = new javax.swing.JPanel();
@@ -184,7 +189,7 @@ public class MenuMember extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(102, 102, 102));
 
         jLabel_kelas.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel_kelas.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel_kelas.setForeground(new java.awt.Color(255, 218, 185));
         jLabel_kelas.setText("Kelas");
         jLabel_kelas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_kelas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -200,7 +205,7 @@ public class MenuMember extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 218, 185));
         jLabel1.setText("Beranda");
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -216,7 +221,7 @@ public class MenuMember extends javax.swing.JFrame {
         });
 
         jLabel_profil.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel_profil.setForeground(new java.awt.Color(255, 102, 0));
+        jLabel_profil.setForeground(new java.awt.Color(255, 218, 185));
         jLabel_profil.setText("Profil");
         jLabel_profil.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel_profil.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -271,24 +276,65 @@ public class MenuMember extends javax.swing.JFrame {
 
         jPanel3.setLayout(new java.awt.CardLayout());
 
-        jPanel4.setBackground(new java.awt.Color(255, 102, 102));
+        jPanel4.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel2.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 55)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 218, 185));
+        jLabel2.setText("Learning Programming Can Be Fun !");
+
+        jLabel5.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 30)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 218, 185));
+        jLabel5.setText("Belajar Mudah dengan Aplikasi Belajar OOP");
+
+        jLabel3.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 40)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 218, 185));
+        jLabel3.setText("Capai Impianmu Sebagai Seorang Programmer Handal ");
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/aplikasibelajarpbo/images/4004.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 2000, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(381, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(968, 968, 968))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(188, 188, 188))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 1085, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(223, 223, 223)
+                                .addComponent(jLabel5)))
+                        .addGap(435, 435, 435))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(105, 105, 105)
+                .addComponent(jLabel2)
+                .addGap(58, 58, 58)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel4, "card2");
 
-        jPanel5.setBackground(new java.awt.Color(51, 255, 51));
+        jPanel5.setBackground(new java.awt.Color(255, 218, 185));
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 51));
+        jPanel7.setBackground(new java.awt.Color(204, 204, 204));
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -419,7 +465,7 @@ public class MenuMember extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(41, 41, 41)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(288, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel5, "card3");
@@ -573,7 +619,7 @@ public class MenuMember extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseEntered
 
     private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
-        jLabel1.setForeground(new Color(255,102,0));
+        jLabel1.setForeground(new Color(255,218,185));
     }//GEN-LAST:event_jLabel1MouseExited
 
     private void jLabel_kelasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_kelasMouseEntered
@@ -585,7 +631,7 @@ public class MenuMember extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel_profilMouseEntered
 
     private void jLabel_kelasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_kelasMouseExited
-        jLabel_kelas.setForeground(new Color(255,102,0));
+        jLabel_kelas.setForeground(new Color(255,218,185));
     }//GEN-LAST:event_jLabel_kelasMouseExited
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -597,7 +643,7 @@ public class MenuMember extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jLabel_profilMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel_profilMouseExited
-        jLabel_profil.setForeground(new Color(255,102,0));
+        jLabel_profil.setForeground(new Color(255,218,185));
     }//GEN-LAST:event_jLabel_profilMouseExited
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -753,7 +799,12 @@ public class MenuMember extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel_email;
     private javax.swing.JLabel jLabel_gender;
     private javax.swing.JLabel jLabel_judul;
